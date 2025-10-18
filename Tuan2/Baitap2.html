@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Giỏ hàng của bạn</title>
+</head>
+<body>
+<h2>Danh sách sản phẩm</h2>
+<button onclick="addToCart('Product 1')">Thêm Product 1 vào giỏ</button>
+<button onclick="addToCart('Product 2')">Thêm Product 2 vào giỏ</button>
+<h2>Giỏ hàng của bạn</h2>
+<ul id="cart"></ul>
+<script>
+// Hàm thêm sản phẩm vào giỏ hàng
+function addToCart(product) {
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+cart.push(product);
+localStorage.setItem('cart', JSON.stringify(cart));
+displayCart();
+}
+// Hàm hiển thị giỏ hàng
+function displayCart() {
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cartList = document.getElementById('cart');
+cartList.innerHTML = '';
+cart.forEach(function(product) {
+let li = document.createElement('li');
+li.textContent = product;
+cartList.appendChild(li);
+});
+}
+// Hiển thị giỏ hàng ngay khi trang tải
+displayCart();
+</script>
+</body>
+</html>
+<h2>Đăng ký</h2>
+<form onsubmit="register(event)">
+<label for="username">Tên đăng nhập:</label>
+<input type="text" id="username" required>
+<br>
+<label for="password">Mật khẩu:</label>
+<input type="password" id="password" required>
+<br>
+<button type="submit">Đăng ký</button>
+</form>
+<h2>Đăng nhập</h2>
+<form onsubmit="login(event)">
+<label for="loginUsername">Tên đăng nhập:</label>
+<input type="text" id="loginUsername" required>
+<br>
+<label for="loginPassword">Mật khẩu:</label>
+<input type="password" id="loginPassword" required>
+<br>
+<button type="submit">Đăng nhập</button>
+</form>
+<script>
+function register(event) {
+event.preventDefault();
+let username = document.getElementById('username').value;
+let password = document.getElementById('password').value;
+localStorage.setItem('user', JSON.stringify({ username, password }));
+alert('Đăng ký thành công!');
+}
+function login(event) {
+event.preventDefault();
+let loginUsername = document.getElementById('loginUsername').value;
+let loginPassword = document.getElementById('loginPassword').value;
+let storedUser = JSON.parse(localStorage.getItem('user'));
+if (storedUser && storedUser.username === loginUsername && storedUser.password === loginPassword) {
+alert('Đăng nhập thành công!');
+} else {
+alert('Tên đăng nhập hoặc mật khẩu không đúng.');
+}
+}
+</script>
